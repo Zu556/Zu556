@@ -23,33 +23,42 @@
     <input type="text" id="searchBar" class="search-bar" placeholder="Search activities...">
 
     <div class="filters">
-      <select id="ageFilter" multiple>
-        <option value="All" selected>All</option>
-        <option value="Elementary School">Elementary School</option>
-        <option value="Middle School">Middle School</option>
-        <option value="High School">High School</option>
-        <option value="Undergraduate">Undergraduate</option>
-        <option value="Graduate">Graduate</option>
-      </select>
+      <div class="filter-group">
+        <label for="ageFilter">Age:</label>
+        <select id="ageFilter" multiple>
+          <option value="All" selected>All</option>
+          <option value="Elementary School">Elementary School</option>
+          <option value="Middle School">Middle School</option>
+          <option value="High School">High School</option>
+          <option value="Undergraduate">Undergraduate</option>
+          <option value="Graduate">Graduate</option>
+        </select>
+      </div>
 
-      <select id="typeFilter" multiple>
-        <option value="All" selected>All</option>
-        <option value="Exam">Exam</option>
-        <option value="Submission">Submission</option>
-        <option value="Tournament">Tournament</option>
-        <option value="Fair">Fair</option>
-        <option value="Performance">Performance</option>
-        <option value="Presentation">Presentation</option>
-      </select>
+      <div class="filter-group">
+        <label for="typeFilter">Type:</label>
+        <select id="typeFilter" multiple>
+          <option value="All" selected>All</option>
+          <option value="Exam">Exam</option>
+          <option value="Submission">Submission</option>
+          <option value="Tournament">Tournament</option>
+          <option value="Fair">Fair</option>
+          <option value="Performance">Performance</option>
+          <option value="Presentation">Presentation</option>
+        </select>
+      </div>
 
-      <select id="categoryFilter" multiple>
-        <option value="All" selected>All</option>
-        <option value="STEM">STEM</option>
-        <option value="Arts">Arts</option>
-        <option value="Leadership">Leadership</option>
-        <option value="Community">Community</option>
-        <option value="Sports">Sports</option>
-      </select>
+      <div class="filter-group">
+        <label for="categoryFilter">Category:</label>
+        <select id="categoryFilter" multiple>
+          <option value="All" selected>All</option>
+          <option value="STEM">STEM</option>
+          <option value="Arts">Arts</option>
+          <option value="Leadership">Leadership</option>
+          <option value="Community">Community</option>
+          <option value="Sports">Sports</option>
+        </select>
+      </div>
 
       <button id="clearFilters" class="btn">Clear Filters</button>
     </div>
@@ -65,3 +74,4 @@
   <script src="activities.js"></script>
 </body>
 </html>
+
