@@ -1,58 +1,92 @@
-// Sample activities data (replace/add more as needed)
+// Sample activity data — extend this as needed
 const activities = [
   {
-    title: "Math Olympiad",
-    description: "A competition for young mathematicians.",
+    title: "National Science Fair",
+    description: "Compete with students nationwide showcasing your scientific innovation.",
     age: "High School",
-    type: "Tournament",
-    category: "STEM"
-  },
-  {
-    title: "Science Fair",
-    description: "Present science projects and innovations.",
-    age: "Middle School",
     type: "Fair",
     category: "STEM"
   },
   {
-    title: "Drama Festival",
-    description: "A performance-based arts event.",
-    age: "High School",
+    title: "School Orchestra Recital",
+    description: "Annual concert performance showcasing musical talent.",
+    age: "Middle School",
     type: "Performance",
     category: "Arts"
   },
-  // Add more as needed
+  {
+    title: "Model United Nations",
+    description: "Engage in global diplomacy and debate as a delegate.",
+    age: "Undergraduate",
+    type: "Tournament",
+    category: "Leadership"
+  },
+  {
+    title: "Community Clean-Up Drive",
+    description: "Volunteer to help your local environment.",
+    age: "High School",
+    type: "Presentation",
+    category: "Community"
+  }
 ];
 
-// Elements
-const searchInput = document.getElementById("searchInput");
-const ageFilter = document.getElementById("ageFilter");
-const typeFilter = document.getElementById("typeFilter");
-const categoryFilter = document.getElementById("categoryFilter");
+const searchBar = document.getElementById("searchBar");
 const activityGrid = document.getElementById("activityGrid");
 
-// Load activities
+const ageChoices = new Choices('#ageFilter', { removeItemButton: true, searchEnabled: true });
+const typeChoices = new Choices('#typeFilter', { removeItemButton: true, searchEnabled: true });
+const categoryChoices = new Choices('#categoryFilter', { removeItemButton: true, searchEnabled: true });
+
+document.getElementById("clearFilters").addEventListener("click", () => {
+  ageChoices.removeActiveItems();
+  typeChoices.removeActiveItems();
+  categoryChoices.removeActiveItems();
+
+  ageChoices.setChoiceByValue("All");
+  typeChoices.setChoiceByValue("All");
+  categoryChoices.setChoiceByValue("All");
+
+  searchBar.value = "";
+  loadActivities();
+});
+
+searchBar.addEventListener("input", loadActivities);
+
 function loadActivities() {
-  activityGrid.innerHTML = "";
-  const search = searchInput.value.toLowerCase();
-  const ageSelected = Array.from(ageFilter.selectedOptions).map(opt => opt.value);
-  const typeSelected = Array.from(typeFilter.selectedOptions).map(opt => opt.value);
-  const categorySelected = Array.from(categoryFilter.selectedOptions).map(opt => opt.value);
+  const query = searchBar.value.toLowerCase();
+
+  const selectedAges = getSelectedValues(ageChoices);
+  const selectedTypes = getSelectedValues(typeChoices);
+  const selectedCategories = getSelectedValues(categoryChoices);
 
   const filtered = activities.filter(activity => {
-    const matchesSearch = activity.title.toLowerCase().includes(search) || activity.description.toLowerCase().includes(search);
-    const matchesAge = ageSelected.includes("All") || ageSelected.includes(activity.age);
-    const matchesType = typeSelected.includes("All") || typeSelected.includes(activity.type);
-    const matchesCategory = categorySelected.includes("All") || categorySelected.includes(activity.category);
-    return matchesSearch && matchesAge && matchesType && matchesCategory;
+    const matchesQuery =
+      activity.title.toLowerCase().includes(query) ||
+      activity.description.toLowerCase().includes(query);
+
+    const matchesAge = selectedAges.includes("All") || selectedAges.includes(activity.age);
+    const matchesType = selectedTypes.includes("All") || selectedTypes.includes(activity.type);
+    const matchesCategory = selectedCategories.includes("All") || selectedCategories.includes(activity.category);
+
+    return matchesQuery && matchesAge && matchesType && matchesCategory;
   });
 
-  if (filtered.length === 0) {
-    activityGrid.innerHTML = "<p>No matching activities found.</p>";
+  renderActivities(filtered);
+}
+
+function getSelectedValues(choicesInstance) {
+  return choicesInstance.getValue(true);
+}
+
+function renderActivities(activitiesList) {
+  activityGrid.innerHTML = "";
+
+  if (activitiesList.length === 0) {
+    activityGrid.innerHTML = "<p>No activities found.</p>";
     return;
   }
 
-  filtered.forEach(activity => {
+  activitiesList.forEach(activity => {
     const card = document.createElement("div");
     card.className = "activity-card";
     card.innerHTML = `
@@ -66,11 +100,5 @@ function loadActivities() {
   });
 }
 
-// Event listeners
-searchInput.addEventListener("input", loadActivities);
-ageFilter.addEventListener("change", loadActivities);
-typeFilter.addEventListener("change", loadActivities);
-categoryFilter.addEventListener("change", loadActivities);
-
-// Initial load
-loadActivities();
+// Load on page load
+document.addEventListener("DOMContentLoaded", loadActivities);
