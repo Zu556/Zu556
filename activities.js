@@ -102,3 +102,61 @@ function renderActivities(activitiesList) {
 
 // Load on page load
 document.addEventListener("DOMContentLoaded", loadActivities);
+// Initialize Choices.js for all filter dropdowns
+const ageChoices = new Choices('#ageFilter', {
+  removeItemButton: true,
+  shouldSort: false,
+  placeholder: true,
+  searchEnabled: true,
+});
+
+const typeChoices = new Choices('#typeFilter', {
+  removeItemButton: true,
+  shouldSort: false,
+  placeholder: true,
+  searchEnabled: true,
+});
+
+const categoryChoices = new Choices('#categoryFilter', {
+  removeItemButton: true,
+  shouldSort: false,
+  placeholder: true,
+  searchEnabled: true,
+});
+
+// Clear filters button
+document.getElementById('clearFilters').addEventListener('click', () => {
+  document.getElementById('searchBar').value = '';
+
+  ageChoices.clearStore();
+  typeChoices.clearStore();
+  categoryChoices.clearStore();
+
+  ageChoices.setChoiceByValue('All');
+  typeChoices.setChoiceByValue('All');
+  categoryChoices.setChoiceByValue('All');
+
+  filterActivities(); // Optional: refresh filtered activities
+});
+
+// Optional: Add searchBar + dropdowns interaction
+document.getElementById('searchBar').addEventListener('input', filterActivities);
+document.querySelectorAll('select').forEach(select => {
+  select.addEventListener('change', filterActivities);
+});
+
+// Replace this with your own filtering logic
+function filterActivities() {
+  const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+  const selectedAges = ageChoices.getValue(true);
+  const selectedTypes = typeChoices.getValue(true);
+  const selectedCategories = categoryChoices.getValue(true);
+
+  console.log('Search:', searchTerm);
+  console.log('Age:', selectedAges);
+  console.log('Type:', selectedTypes);
+  console.log('Category:', selectedCategories);
+
+  // Your filtering logic here
+}
+
