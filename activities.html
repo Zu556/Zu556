@@ -1,0 +1,69 @@
+<!-- activities.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activities</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Extracurriculars Guide</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="activities.html">Activities</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <section class="activities-section">
+    <h2>Explore Activities</h2>
+    <input type="text" id="searchBar" class="search-bar" placeholder="Search activities..." />
+
+    <div class="filters">
+      <select id="ageFilter" multiple>
+        <option value="All">All Ages</option>
+        <option value="Elementary School">Elementary School</option>
+        <option value="Middle School">Middle School</option>
+        <option value="High School">High School</option>
+        <option value="Undergraduate">Undergraduate</option>
+        <option value="Graduate">Graduate</option>
+      </select>
+
+      <select id="typeFilter" multiple>
+        <option value="All">All Types</option>
+        <option value="Exam">Exam</option>
+        <option value="Submission">Submission</option>
+        <option value="Tournament">Tournament</option>
+        <option value="Fair">Fair</option>
+        <option value="Performance">Performance</option>
+        <option value="Presentation">Presentation</option>
+      </select>
+
+      <select id="categoryFilter" multiple>
+        <option value="All">All Categories</option>
+        <option value="STEM">STEM</option>
+        <option value="Arts">Arts</option>
+        <option value="Leadership">Leadership</option>
+        <option value="Community">Community</option>
+        <option value="Sports">Sports</option>
+      </select>
+    </div>
+
+    <div class="activity-grid">
+      <div class="activity-card" data-age="High School" data-type="Exam" data-category="STEM">
+        <h3>Math Olympiad</h3>
+        <p>National-level competition for high school students.</p>
+      </div>
+      <div class="activity-card" data-age="Undergraduate" data-type="Submission" data-category="Arts">
+        <h3>Creative Writing Contest</h3>
+        <p>Submit your short stories and poems for a prize.</p>
+      </div>
+      <!-- Add more cards with appropriate data attributes -->
+    </div>
+  </section>
+
+  <script src="activities.js"></script>
+</body>
+</html>
