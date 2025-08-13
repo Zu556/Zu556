@@ -249,3 +249,24 @@ body {
   background-color: #162a60;
   color: #ffdd57;
 }
+
+/* Force dark styling for Choices dropdown */
+.choices__inner {
+  background-color: #0a1a3f !important;
+  color: white !important;
+  border-radius: 6px;
+}
+
+.choices__list--dropdown {
+  background-color: #0a1a3f !important;
+  border-radius: 6px;
+}
+
+.choices__list--dropdown .choices__item {
+  color: white !important;
+}
+
+.choices__list--dropdown .choices__item--selectable:hover {
+  background-color: #162a60 !important;
+  color: #ffdd57 !important;
+}
