@@ -270,3 +270,20 @@ body {
   background-color: #162a60 !important;
   color: #ffdd57 !important;
 }
+/* Keep dropdown menu background dark even when not hovered */
+.choices__list--dropdown,
+.choices__list[aria-expanded] {
+  background-color: #0b1e3f !important; /* Dark navy */
+  color: #fff !important;
+}
+
+/* Make placeholder text match the theme */
+.choices__placeholder {
+  color: #ccc !important;
+}
+
+/* Keep hover effect bright */
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+  background-color: #ffdd57 !important;
+  color: #000 !important;
+}
