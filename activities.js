@@ -1,23 +1,25 @@
-/// Initialize Choices.js for each dropdown
-const ageChoices = new Choices('#ageFilter', {
-  removeItemButton: true,
-  placeholderValue: 'Select Age...',
-  searchPlaceholderValue: 'Search age options',
-  shouldSort: false
-});
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Choices.js for each filter
+  const ageChoices = new Choices('#ageFilter', {
+    removeItemButton: true,
+    placeholder: true,
+    placeholderValue: 'Select age group',
+    searchPlaceholderValue: 'Search...',
+  });
 
-const typeChoices = new Choices('#typeFilter', {
-  removeItemButton: true,
-  placeholderValue: 'Select Type...',
-  searchPlaceholderValue: 'Search type options',
-  shouldSort: false
-});
+  const typeChoices = new Choices('#typeFilter', {
+    removeItemButton: true,
+    placeholder: true,
+    placeholderValue: 'Select type',
+    searchPlaceholderValue: 'Search...',
+  });
 
-const categoryChoices = new Choices('#categoryFilter', {
-  removeItemButton: true,
-  placeholderValue: 'Select Category...',
-  searchPlaceholderValue: 'Search category options',
-  shouldSort: false
+  const categoryChoices = new Choices('#categoryFilter', {
+    removeItemButton: true,
+    placeholder: true,
+    placeholderValue: 'Select category',
+    searchPlaceholderValue: 'Search...',
+  });
 });
 
 // Sample activities data (replace with your actual data or API call)
