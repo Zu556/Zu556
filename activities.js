@@ -1,162 +1,124 @@
-// Sample activity data — extend this as needed
+/// Initialize Choices.js for each dropdown
+const ageChoices = new Choices('#ageFilter', {
+  removeItemButton: true,
+  placeholderValue: 'Select Age...',
+  searchPlaceholderValue: 'Search age options',
+  shouldSort: false
+});
+
+const typeChoices = new Choices('#typeFilter', {
+  removeItemButton: true,
+  placeholderValue: 'Select Type...',
+  searchPlaceholderValue: 'Search type options',
+  shouldSort: false
+});
+
+const categoryChoices = new Choices('#categoryFilter', {
+  removeItemButton: true,
+  placeholderValue: 'Select Category...',
+  searchPlaceholderValue: 'Search category options',
+  shouldSort: false
+});
+
+// Sample activities data (replace with your actual data or API call)
 const activities = [
   {
-    title: "National Science Fair",
-    description: "Compete with students nationwide showcasing your scientific innovation.",
-    age: "High School",
-    type: "Fair",
-    category: "STEM"
+    name: "Math Olympiad",
+    age: ["High School", "Undergraduate"],
+    type: ["Tournament"],
+    category: ["STEM"]
   },
   {
-    title: "School Orchestra Recital",
-    description: "Annual concert performance showcasing musical talent.",
-    age: "Middle School",
-    type: "Performance",
-    category: "Arts"
+    name: "Science Fair",
+    age: ["Middle School", "High School"],
+    type: ["Fair"],
+    category: ["STEM"]
   },
   {
-    title: "Model United Nations",
-    description: "Engage in global diplomacy and debate as a delegate.",
-    age: "Undergraduate",
-    type: "Tournament",
-    category: "Leadership"
+    name: "Art Competition",
+    age: ["Elementary School", "Middle School"],
+    type: ["Submission"],
+    category: ["Arts"]
   },
   {
-    title: "Community Clean-Up Drive",
-    description: "Volunteer to help your local environment.",
-    age: "High School",
-    type: "Presentation",
-    category: "Community"
+    name: "Leadership Summit",
+    age: ["High School", "Undergraduate"],
+    type: ["Presentation"],
+    category: ["Leadership"]
   }
 ];
 
-const searchBar = document.getElementById("searchBar");
-const activityGrid = document.getElementById("activityGrid");
+// DOM elements
+const searchBar = document.getElementById('searchBar');
+const activityGrid = document.getElementById('activityGrid');
+const clearFilters = document.getElementById('clearFilters');
 
-const ageChoices = new Choices('#ageFilter', { removeItemButton: true, searchEnabled: true });
-const typeChoices = new Choices('#typeFilter', { removeItemButton: true, searchEnabled: true });
-const categoryChoices = new Choices('#categoryFilter', { removeItemButton: true, searchEnabled: true });
-
-document.getElementById("clearFilters").addEventListener("click", () => {
-  ageChoices.removeActiveItems();
-  typeChoices.removeActiveItems();
-  categoryChoices.removeActiveItems();
-
-  ageChoices.setChoiceByValue("All");
-  typeChoices.setChoiceByValue("All");
-  categoryChoices.setChoiceByValue("All");
-
-  searchBar.value = "";
-  loadActivities();
-});
-
-searchBar.addEventListener("input", loadActivities);
-
-function loadActivities() {
-  const query = searchBar.value.toLowerCase();
-
-  const selectedAges = getSelectedValues(ageChoices);
-  const selectedTypes = getSelectedValues(typeChoices);
-  const selectedCategories = getSelectedValues(categoryChoices);
-
-  const filtered = activities.filter(activity => {
-    const matchesQuery =
-      activity.title.toLowerCase().includes(query) ||
-      activity.description.toLowerCase().includes(query);
-
-    const matchesAge = selectedAges.includes("All") || selectedAges.includes(activity.age);
-    const matchesType = selectedTypes.includes("All") || selectedTypes.includes(activity.type);
-    const matchesCategory = selectedCategories.includes("All") || selectedCategories.includes(activity.category);
-
-    return matchesQuery && matchesAge && matchesType && matchesCategory;
-  });
-
-  renderActivities(filtered);
-}
-
-function getSelectedValues(choicesInstance) {
-  return choicesInstance.getValue(true);
-}
-
-function renderActivities(activitiesList) {
-  activityGrid.innerHTML = "";
-
-  if (activitiesList.length === 0) {
-    activityGrid.innerHTML = "<p>No activities found.</p>";
+// Function to render activities
+function renderActivities(filteredActivities) {
+  activityGrid.innerHTML = '';
+  if (filteredActivities.length === 0) {
+    activityGrid.innerHTML = '<p>No activities found.</p>';
     return;
   }
 
-  activitiesList.forEach(activity => {
-    const card = document.createElement("div");
-    card.className = "activity-card";
+  filteredActivities.forEach(activity => {
+    const card = document.createElement('div');
+    card.classList.add('activity-card');
     card.innerHTML = `
-      <h3>${activity.title}</h3>
-      <p>${activity.description}</p>
-      <small><strong>Age:</strong> ${activity.age}</small><br>
-      <small><strong>Type:</strong> ${activity.type}</small><br>
-      <small><strong>Category:</strong> ${activity.category}</small>
+      <h3>${activity.name}</h3>
+      <p><strong>Age:</strong> ${activity.age.join(', ')}</p>
+      <p><strong>Type:</strong> ${activity.type.join(', ')}</p>
+      <p><strong>Category:</strong> ${activity.category.join(', ')}</p>
     `;
     activityGrid.appendChild(card);
   });
 }
 
-// Load on page load
-document.addEventListener("DOMContentLoaded", loadActivities);
-// Initialize Choices.js for all filter dropdowns
-const ageChoices = new Choices('#ageFilter', {
-  removeItemButton: true,
-  shouldSort: false,
-  placeholder: true,
-  searchEnabled: true,
-});
-
-const typeChoices = new Choices('#typeFilter', {
-  removeItemButton: true,
-  shouldSort: false,
-  placeholder: true,
-  searchEnabled: true,
-});
-
-const categoryChoices = new Choices('#categoryFilter', {
-  removeItemButton: true,
-  shouldSort: false,
-  placeholder: true,
-  searchEnabled: true,
-});
-
-// Clear filters button
-document.getElementById('clearFilters').addEventListener('click', () => {
-  document.getElementById('searchBar').value = '';
-
-  ageChoices.clearStore();
-  typeChoices.clearStore();
-  categoryChoices.clearStore();
-
-  ageChoices.setChoiceByValue('All');
-  typeChoices.setChoiceByValue('All');
-  categoryChoices.setChoiceByValue('All');
-
-  filterActivities(); // Optional: refresh filtered activities
-});
-
-// Optional: Add searchBar + dropdowns interaction
-document.getElementById('searchBar').addEventListener('input', filterActivities);
-document.querySelectorAll('select').forEach(select => {
-  select.addEventListener('change', filterActivities);
-});
-
-// Replace this with your own filtering logic
+// Function to filter activities
 function filterActivities() {
-  const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+  const searchText = searchBar.value.toLowerCase();
+
   const selectedAges = ageChoices.getValue(true);
   const selectedTypes = typeChoices.getValue(true);
   const selectedCategories = categoryChoices.getValue(true);
 
-  console.log('Search:', searchTerm);
-  console.log('Age:', selectedAges);
-  console.log('Type:', selectedTypes);
-  console.log('Category:', selectedCategories);
+  const filtered = activities.filter(activity => {
+    const matchesSearch = activity.name.toLowerCase().includes(searchText);
 
-  // Your filtering logic here
+    const matchesAge =
+      selectedAges.length === 0 ||
+      selectedAges.includes("All") ||
+      selectedAges.some(age => activity.age.includes(age));
+
+    const matchesType =
+      selectedTypes.length === 0 ||
+      selectedTypes.includes("All") ||
+      selectedTypes.some(type => activity.type.includes(type));
+
+    const matchesCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes("All") ||
+      selectedCategories.some(cat => activity.category.includes(cat));
+
+    return matchesSearch && matchesAge && matchesType && matchesCategory;
+  });
+
+  renderActivities(filtered);
 }
 
+// Event listeners
+searchBar.addEventListener('input', filterActivities);
+ageChoices.passedElement.element.addEventListener('change', filterActivities);
+typeChoices.passedElement.element.addEventListener('change', filterActivities);
+categoryChoices.passedElement.element.addEventListener('change', filterActivities);
+
+clearFilters.addEventListener('click', () => {
+  searchBar.value = '';
+  ageChoices.removeActiveItems();
+  typeChoices.removeActiveItems();
+  categoryChoices.removeActiveItems();
+  filterActivities();
+});
+
+// Initial render
+renderActivities(activities);
