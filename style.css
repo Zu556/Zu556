@@ -270,6 +270,7 @@ body {
   background-color: #162a60 !important;
   color: #ffdd57 !important;
 }
+
 /* Style placeholder text inside the dropdown */
 .choices__inner .choices__placeholder {
   color: #ccc !important; /* light gray */
