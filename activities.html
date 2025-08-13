@@ -1,3 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activities</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Choices.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Carpe Diem</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="guide.html">Guide</a></li>
+      <li><a href="activities.html">Activities</a></li>
+    </ul>
+  </nav>
+
+  <section class="activities-section">
+    <input type="text" id="searchBar" class="search-bar" placeholder="Search activities...">
+
 <div class="filters">
   <label for="ageFilter">Age:</label>
   <select id="ageFilter" multiple>
@@ -30,3 +55,14 @@
   <button id="clearFilters" class="btn">Clear Filters</button>
 </div>
 
+    <div class="activity-grid" id="activityGrid">
+      <!-- Activity cards will be injected here -->
+    </div>
+  </section>
+
+  <!-- Choices.js -->
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <!-- Your custom script -->
+  <script src="activities.js"></script>
+</body>
+</html>
