@@ -1,382 +1,124 @@
-/* General Body Styling */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #1d2d5d;
-  color: #ffffff;
-}
+// Initialize Choices.js for each dropdown
+const ageChoices = new Choices('#ageFilter', {
+  removeItemButton: true,
+  placeholderValue: 'Select Age...',
+  searchPlaceholderValue: 'Search age options',
+  shouldSort: false
+});
 
-/* Navbar */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5em 3em;
-  background-color: transparent;
-}
+const typeChoices = new Choices('#typeFilter', {
+  removeItemButton: true,
+  placeholderValue: 'Select Type...',
+  searchPlaceholderValue: 'Search type options',
+  shouldSort: false
+});
 
-.logo {
-  font-size: 1.4em;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
+const categoryChoices = new Choices('#categoryFilter', {
+  removeItemButton: true,
+  placeholderValue: 'Select Category...',
+  searchPlaceholderValue: 'Search category options',
+  shouldSort: false
+});
 
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 2em;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #ffdd57;
-}
-
-/* Hero Section */
-.hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4em 6em;
-  height: 85vh;
-  box-sizing: border-box;
-}
-
-.hero-text {
-  flex: 1;
-}
-
-.hero-text h1 {
-  font-size: 3.5em;
-  line-height: 1.2;
-  margin: 0.2em 0;
-  font-weight: bold;
-}
-
-.hero-text .subtext {
-  font-size: 1.1em;
-  max-width: 500px;
-  line-height: 1.6;
-  margin-top: 1em;
-  color: #dddddd;
-}
-
-.hero-text h2 {
-  font-size: 1em;
-  opacity: 0.7;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.hero-image img {
-  max-width: 450px;
-  height: auto;
-  border-radius: 10px;
-}
-
-/* Buttons */
-.btn {
-  display: inline-block;
-  margin-top: 1em;
-  padding: 12px 24px;
-  background-color: #ffffff;
-  color: #1d2d5d;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
-  font-size: 1em;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: #ffdd57;
-  color: #000;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+// Sample activities data (replace with your actual data or API call)
+const activities = [
+  {
+    name: "Math Olympiad",
+    age: ["High School", "Undergraduate"],
+    type: ["Tournament"],
+    category: ["STEM"]
+  },
+  {
+    name: "Science Fair",
+    age: ["Middle School", "High School"],
+    type: ["Fair"],
+    category: ["STEM"]
+  },
+  {
+    name: "Art Competition",
+    age: ["Elementary School", "Middle School"],
+    type: ["Submission"],
+    category: ["Arts"]
+  },
+  {
+    name: "Leadership Summit",
+    age: ["High School", "Undergraduate"],
+    type: ["Presentation"],
+    category: ["Leadership"]
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+];
 
-.hero-text h2,
-.hero-text h1,
-.hero-text .subtext,
-.hero-text .btn {
-  animation: fadeInUp 1s ease forwards;
-  opacity: 0;
-}
+// DOM elements
+const searchBar = document.getElementById('searchBar');
+const activityGrid = document.getElementById('activityGrid');
+const clearFilters = document.getElementById('clearFilters');
 
-.hero-text h2 { animation-delay: 0.2s; }
-.hero-text h1 { animation-delay: 0.4s; }
-.hero-text .subtext { animation-delay: 0.6s; }
-.hero-text .btn { animation-delay: 0.8s; }
-
-/* Activities Section */
-.activities-section {
-  padding: 2em;
-  max-width: 1000px;
-  margin: auto;
-  text-align: center;
-}
-
-.search-bar {
-  width: 80%;
-  padding: 10px;
-  margin: 1em 0;
-  border: none;
-  border-radius: 5px;
-  font-size: 1em;
-}
-
-/* Dropdown Filters */
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1em;
-  margin-bottom: 2em;
-}
-
-/* Make dropdowns styled like modern selects */
-.choices {
-  min-width: 180px;
-  border-radius: 6px;
-  background-color: #0a1a3f; /* Dark blue */
-  color: white;
-}
-
-.choices__inner {
-  background-color: #0a1a3f;
-  border-radius: 6px;
-  border: 1px solid #444;
-}
-
-.choices__list--dropdown {
-  background-color: #0a1a3f;
-  border-radius: 6px;
-}
-
-.choices__list--dropdown .choices__item {
-  padding: 10px;
-  cursor: pointer;
-}
-
-.choices__list--dropdown .choices__item--selectable:hover {
-  background-color: #162a60; /* Slightly lighter on hover */
-  color: #ffdd57; /* Yellow highlight */
-}
-
-#clearFilters {
-  background-color: #ffdd57;
-  color: #1d2d5d;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#clearFilters:hover {
-  background-color: #ffe680;
-}
-
-/* Activity Cards */
-.activity-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2em;
-}
-
-.activity-card {
-  background-color: #ffffff10;
-  padding: 1.5em;
-  border-radius: 10px;
-  color: white;
-  text-align: left;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    padding: 1em;
+// Function to render activities
+function renderActivities(filteredActivities) {
+  activityGrid.innerHTML = '';
+  if (filteredActivities.length === 0) {
+    activityGrid.innerHTML = '<p>No activities found.</p>';
+    return;
   }
 
-  .nav-links {
-    flex-direction: column;
-    gap: 1em;
-    margin-top: 1em;
-  }
-
-  .hero {
-    flex-direction: column;
-    padding: 2em;
-    text-align: center;
-    height: auto;
-  }
-
-  .hero-text, .hero-image {
-    width: 100%;
-  }
-
-  .hero-text h1 {
-    font-size: 2em;
-  }
-
-  .hero-text h2 {
-    font-size: 0.9em;
-  }
-
-  .hero-image img {
-    max-width: 100%;
-    margin-top: 2em;
-  }
-
-  .search-bar {
-    width: 100%;
-  }
-
-  .filters {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  
-/* Label for filters */
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
+  filteredActivities.forEach(activity => {
+    const card = document.createElement('div');
+    card.classList.add('activity-card');
+    card.innerHTML = `
+      <h3>${activity.name}</h3>
+      <p><strong>Age:</strong> ${activity.age.join(', ')}</p>
+      <p><strong>Type:</strong> ${activity.type.join(', ')}</p>
+      <p><strong>Category:</strong> ${activity.category.join(', ')}</p>
+    `;
+    activityGrid.appendChild(card);
+  });
 }
 
-.filter-group label {
-  margin-bottom: 0.3em;
-  font-weight: bold;
-  color: #ffffff;
-  font-size: 0.95em;
+// Function to filter activities
+function filterActivities() {
+  const searchText = searchBar.value.toLowerCase();
+
+  const selectedAges = ageChoices.getValue(true);
+  const selectedTypes = typeChoices.getValue(true);
+  const selectedCategories = categoryChoices.getValue(true);
+
+  const filtered = activities.filter(activity => {
+    const matchesSearch = activity.name.toLowerCase().includes(searchText);
+
+    const matchesAge =
+      selectedAges.length === 0 ||
+      selectedAges.includes("All") ||
+      selectedAges.some(age => activity.age.includes(age));
+
+    const matchesType =
+      selectedTypes.length === 0 ||
+      selectedTypes.includes("All") ||
+      selectedTypes.some(type => activity.type.includes(type));
+
+    const matchesCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes("All") ||
+      selectedCategories.some(cat => activity.category.includes(cat));
+
+    return matchesSearch && matchesAge && matchesType && matchesCategory;
+  });
+
+  renderActivities(filtered);
 }
 
-/* Adjust Choices.js dropdown appearance */
-.choices__inner {
-  background-color: #ffffff15;
-  color: white;
-  border-radius: 8px;
-  padding: 10px;
-  border: none;
-  min-width: 180px;
-}
+// Event listeners
+searchBar.addEventListener('input', filterActivities);
+ageChoices.passedElement.element.addEventListener('change', filterActivities);
+typeChoices.passedElement.element.addEventListener('change', filterActivities);
+categoryChoices.passedElement.element.addEventListener('change', filterActivities);
 
-.choices__list--dropdown,
-.choices__list[aria-expanded] {
-  background-color: #2c3e70;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  color: white;
-}
+clearFilters.addEventListener('click', () => {
+  searchBar.value = '';
+  ageChoices.removeActiveItems();
+  typeChoices.removeActiveItems();
+  categoryChoices.removeActiveItems();
+  filterActivities();
+});
 
-.choices__list--dropdown .choices__item,
-.choices__list[aria-expanded] .choices__item {
-  padding: 10px;
-  cursor: pointer;
-  border-bottom: 1px solid #ffffff22;
-}
-
-.choices__list--dropdown .choices__item:hover,
-.choices__list[aria-expanded] .choices__item:hover {
-  background-color: #ffdd57;
-  color: #1d2d5d;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-.choices__list--multiple .choices__item {
-  background-color: #ffdd57;
-  color: #1d2d5d;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
-/* Dropdown wrapper */
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 200px;
-}
-
-/* Label styling */
-.filter-group label {
-  margin-bottom: 0.5em;
-  font-weight: bold;
-  color: #ffffff;
-  font-size: 1em;
-}
-
-/* Choices.js styling overrides */
-.choices__inner {
-  background-color: #1b1f3a;
-  color: white;
-  border-radius: 10px;
-  padding: 10px;
-  border: none;
-  min-height: 50px;
-  font-size: 0.95em;
-}
-
-.choices__list--multiple .choices__item {
-  background-color: #ffdd57;
-  color: #1d2d5d;
-  border-radius: 6px;
-  font-weight: bold;
-  margin: 2px;
-}
-
-.choices__list--dropdown,
-.choices__list[aria-expanded] {
-  background-color: #0e152e;
-  border-radius: 10px;
-  max-height: 300px;
-  overflow-y: auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.choices__list--dropdown .choices__item,
-.choices__list[aria-expanded] .choices__item {
-  padding: 10px 14px;
-  cursor: pointer;
-  text-align: left;
-  color: white;
-  border-bottom: 1px solid #2a2f4c;
-  white-space: normal;
-}
-
-.choices__list--dropdown .choices__item:hover,
-.choices__list[aria-expanded] .choices__item:hover {
-  background-color: #ffdd57;
-  color: #1d2d5d;
-  font-weight: bold;
-  border-radius: 6px;
-}
-
-/* Ensure dropdown fills full width */
-.choices {
-  width: 100%;
-}
-
-
+// Initial render
+renderActivities(activities);
