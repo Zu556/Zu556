@@ -1,126 +1,127 @@
+// ======== ACTIVITIES.JS ========
+
+// Global variable to store all activities
+let ACTIVITIES = [];
+
+// Choices.js instances (initialized after DOM loads)
+let ageChoices, typeChoices, categoryChoices;
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Choices.js for each filter
-  const ageChoices = new Choices('#ageFilter', {
-    removeItemButton: true,
-    placeholder: true,
-    placeholderValue: 'Select age group',
-    searchPlaceholderValue: 'Search...',
-  });
-
-  const typeChoices = new Choices('#typeFilter', {
-    removeItemButton: true,
-    placeholder: true,
-    placeholderValue: 'Select type',
-    searchPlaceholderValue: 'Search...',
-  });
-
-  const categoryChoices = new Choices('#categoryFilter', {
-    removeItemButton: true,
-    placeholder: true,
-    placeholderValue: 'Select category',
-    searchPlaceholderValue: 'Search...',
-  });
+  initChoices();
+  loadActivities();
 });
 
-// Sample activities data (replace with your actual data or API call)
-const activities = [
-  {
-    name: "Math Olympiad",
-    age: ["High School", "Undergraduate"],
-    type: ["Tournament"],
-    category: ["STEM"]
-  },
-  {
-    name: "Science Fair",
-    age: ["Middle School", "High School"],
-    type: ["Fair"],
-    category: ["STEM"]
-  },
-  {
-    name: "Art Competition",
-    age: ["Elementary School", "Middle School"],
-    type: ["Submission"],
-    category: ["Arts"]
-  },
-  {
-    name: "Leadership Summit",
-    age: ["High School", "Undergraduate"],
-    type: ["Presentation"],
-    category: ["Leadership"]
+// Initialize Choices.js for each filter dropdown
+function initChoices() {
+  ageChoices = new Choices('#ageFilter', {
+    removeItemButton: true,
+    placeholder: true,
+    placeholderValue: 'Select Age Group',
+    searchPlaceholderValue: 'Search...',
+    searchEnabled: true,
+    shouldSort: false
+  });
+
+  typeChoices = new Choices('#typeFilter', {
+    removeItemButton: true,
+    placeholder: true,
+    placeholderValue: 'Select Type',
+    searchPlaceholderValue: 'Search...',
+    searchEnabled: true,
+    shouldSort: false
+  });
+
+  categoryChoices = new Choices('#categoryFilter', {
+    removeItemButton: true,
+    placeholder: true,
+    placeholderValue: 'Select Category',
+    searchPlaceholderValue: 'Search...',
+    searchEnabled: true,
+    shouldSort: false
+  });
+
+  // Listen for changes in filters
+  document.getElementById('searchBar').addEventListener('input', filterActivities);
+  ageChoices.passedElement.element.addEventListener('change', filterActivities);
+  typeChoices.passedElement.element.addEventListener('change', filterActivities);
+  categoryChoices.passedElement.element.addEventListener('change', filterActivities);
+}
+
+// Load activities.json and initialize the UI
+async function loadActivities() {
+  try {
+    const res = await fetch('activities.json'); // adjust path if needed
+    ACTIVITIES = await res.json();
+
+    buildFilterOptions(ACTIVITIES); // Populate dropdowns from data
+    renderActivities(ACTIVITIES); // Show all activities initially
+  } catch (err) {
+    console.error('Error loading activities.json:', err);
   }
-];
+}
 
-// DOM elements
-const searchBar = document.getElementById('searchBar');
-const activityGrid = document.getElementById('activityGrid');
-const clearFilters = document.getElementById('clearFilters');
+// Create dropdown options dynamically based on dataset
+function buildFilterOptions(data) {
+  const ages = uniqueVals(data, 'age');
+  const types = uniqueVals(data, 'type');
+  const cats = uniqueVals(data, 'category');
 
-// Function to render activities
-function renderActivities(filteredActivities) {
-  activityGrid.innerHTML = '';
-  if (filteredActivities.length === 0) {
-    activityGrid.innerHTML = '<p>No activities found.</p>';
+  ageChoices.setChoices(ages.map(v => ({ value: v, label: v })), 'value', 'label', true);
+  typeChoices.setChoices(types.map(v => ({ value: v, label: v })), 'value', 'label', true);
+  categoryChoices.setChoices(cats.map(v => ({ value: v, label: v })), 'value', 'label', true);
+}
+
+// Return unique, sorted values for a key
+function uniqueVals(list, key) {
+  return [...new Set(list.map(x => (x[key] || '').toString().trim()).filter(Boolean))].sort();
+}
+
+// Render cards to the DOM
+function renderActivities(list) {
+  const grid = document.getElementById('activityGrid');
+  if (!list.length) {
+    grid.innerHTML = `<p>No activities found.</p>`;
     return;
   }
 
-  filteredActivities.forEach(activity => {
-    const card = document.createElement('div');
-    card.classList.add('activity-card');
-    card.innerHTML = `
-      <h3>${activity.name}</h3>
-      <p><strong>Age:</strong> ${activity.age.join(', ')}</p>
-      <p><strong>Type:</strong> ${activity.type.join(', ')}</p>
-      <p><strong>Category:</strong> ${activity.category.join(', ')}</p>
-    `;
-    activityGrid.appendChild(card);
-  });
+  grid.innerHTML = list.map(item => `
+    <div class="activity-card">
+      <h3>${item.name || 'Untitled'}</h3>
+      <p>${item.description || ''}</p>
+      <div><strong>Age:</strong> ${item.age || '—'}</div>
+      <div><strong>Type:</strong> ${item.type || '—'}</div>
+      <div><strong>Category:</strong> ${item.category || '—'}</div>
+      ${item.tags ? `<div class="tags">${item.tags.split(',').map(t => `<span class="tag">${t.trim()}</span>`).join('')}</div>` : ''}
+      ${item.link ? `<a class="btn" href="${item.link}" target="_blank" rel="noopener">Learn more</a>` : ''}
+    </div>
+  `).join('');
 }
 
-// Function to filter activities
+// Return current filter selections
+function currentSelections() {
+  const searchTerm = document.getElementById('searchBar').value.trim().toLowerCase();
+  const ages = ageChoices.getValue(true);
+  const types = typeChoices.getValue(true);
+  const cats = categoryChoices.getValue(true);
+  return { searchTerm, ages, types, cats };
+}
+
+// Apply filters to dataset
 function filterActivities() {
-  const searchText = searchBar.value.toLowerCase();
+  const { searchTerm, ages, types, cats } = currentSelections();
 
-  const selectedAges = ageChoices.getValue(true);
-  const selectedTypes = typeChoices.getValue(true);
-  const selectedCategories = categoryChoices.getValue(true);
+  const filtered = ACTIVITIES.filter(a => {
+    const hay = [
+      a.name, a.description, a.type, a.category, a.age, a.location, a.tags
+    ].join(' ').toLowerCase();
 
-  const filtered = activities.filter(activity => {
-    const matchesSearch = activity.name.toLowerCase().includes(searchText);
+    const passSearch = searchTerm ? hay.includes(searchTerm) : true;
+    const inAges = !ages.length || ages.some(v => (a.age || '').includes(v));
+    const inTypes = !types.length || types.some(v => (a.type || '').includes(v));
+    const inCats = !cats.length || cats.some(v => (a.category || '').includes(v));
 
-    const matchesAge =
-      selectedAges.length === 0 ||
-      selectedAges.includes("All") ||
-      selectedAges.some(age => activity.age.includes(age));
-
-    const matchesType =
-      selectedTypes.length === 0 ||
-      selectedTypes.includes("All") ||
-      selectedTypes.some(type => activity.type.includes(type));
-
-    const matchesCategory =
-      selectedCategories.length === 0 ||
-      selectedCategories.includes("All") ||
-      selectedCategories.some(cat => activity.category.includes(cat));
-
-    return matchesSearch && matchesAge && matchesType && matchesCategory;
+    return passSearch && inAges && inTypes && inCats;
   });
 
   renderActivities(filtered);
 }
-
-// Event listeners
-searchBar.addEventListener('input', filterActivities);
-ageChoices.passedElement.element.addEventListener('change', filterActivities);
-typeChoices.passedElement.element.addEventListener('change', filterActivities);
-categoryChoices.passedElement.element.addEventListener('change', filterActivities);
-
-clearFilters.addEventListener('click', () => {
-  searchBar.value = '';
-  ageChoices.removeActiveItems();
-  typeChoices.removeActiveItems();
-  categoryChoices.removeActiveItems();
-  filterActivities();
-});
-
-// Initial render
-renderActivities(activities);
