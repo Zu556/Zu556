@@ -270,6 +270,20 @@ body {
   background-color: #162a60 !important;
   color: #ffdd57 !important;
 }
+/* Style placeholder text inside the dropdown */
+.choices__inner .choices__placeholder {
+  color: #ccc !important; /* light gray */
+  opacity: 1; /* ensure it’s visible */
+}
+
+/* Match placeholder background to box */
+.choices__inner {
+  background-color: #0b1e3f !important; /* same dark navy */
+  border-radius: 8px;
+  border: none;
+  color: #fff !important; /* text color when something is selected */
+}
+
 /* Keep dropdown menu background dark even when not hovered */
 .choices__list--dropdown,
 .choices__list[aria-expanded] {
