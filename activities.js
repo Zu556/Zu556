@@ -121,4 +121,4 @@ clearFilters.addEventListener('click', () => {
 });
 
 // Initial render
-renderActivities(activities)
+renderActivities(activities);
