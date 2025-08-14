@@ -205,50 +205,53 @@ body {
 }
 
 /* ===== FILTER BAR ===== */
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75em;
-  margin-bottom: 1.5em;
+/* Make placeholder match dropdown box */
+.choices__inner .choices__placeholder {
+  color: #fff !important; /* White text */
+  background-color: #0b1e3f !important; /* Match dropdown bg */
+  opacity: 1 !important;
 }
 
-.filters label {
-  font-weight: bold;
-  margin-right: 0.3em;
-  color: white;
-}
-
-.choices {
-  min-width: 180px;
-  font-size: 0.95em;
-}
-
+/* Dropdown container styling */
 .choices__inner {
   background-color: #0b1e3f !important;
-  border: 1px solid #1a2a55;
-  border-radius: 50px !important; /* pill shape */
-  padding: 6px 12px;
   color: white !important;
+  border-radius: 8px;
+  border: 1px solid #444;
 }
 
-.choices__placeholder {
-  color: #ccc !important;
-}
-
+/* Dropdown menu styling */
 .choices__list--dropdown {
   background-color: #0b1e3f !important;
+  border: 1px solid #444;
   border-radius: 8px;
 }
 
+/* Allow multi-line for long options */
 .choices__list--dropdown .choices__item {
-  padding: 10px;
-  white-space: normal;
+  white-space: normal !important; /* Wrap text */
+  line-height: 1.4em; /* Better readability */
+  padding: 8px 12px;
 }
 
+/* Move "Press to select" under the option text */
+.choices__list--dropdown .choices__item[data-select-text]::after {
+  content: attr(data-select-text);
+  display: block;
+  font-size: 0.8em;
+  color: #aaa;
+  margin-top: 4px;
+}
+
+/* Hover highlight */
 .choices__list--dropdown .choices__item--selectable.is-highlighted {
-  background-color: #ffdd57 !important;
-  color: #000 !important;
+  background-color: #162a60 !important;
+  color: #ffdd57 !important;
+}
+
+/* Space between filter elements */
+.filters {
+  gap: 1.5em; /* More breathing room */
 }
 
 /* ===== ACTIVITY GRID ===== */
