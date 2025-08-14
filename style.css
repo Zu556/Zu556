@@ -208,46 +208,47 @@ body {
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 1em;
-  justify-content: center;
-  margin: 2em 0;
+  align-items: center;
+  gap: 0.75em;
+  margin-bottom: 1.5em;
 }
 
-/* Dropdowns styled like modern filter pills */
-.filters select {
-  appearance: none; /* remove default arrow */
-  background-color: #0b1e3f;
-  color: #ffffff;
-  padding: 12px 18px;
-  border: 1px solid #2a3f75;
-  border-radius: 10px;
+.filters label {
+  font-weight: bold;
+  margin-right: 0.3em;
+  color: white;
+}
+
+.choices {
+  min-width: 180px;
   font-size: 0.95em;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-/* Hover effect */
-.filters select:hover {
-  border-color: #ffdd57;
-  box-shadow: 0 3px 10px rgba(255, 221, 87, 0.2);
+.choices__inner {
+  background-color: #0b1e3f !important;
+  border: 1px solid #1a2a55;
+  border-radius: 50px !important; /* pill shape */
+  padding: 6px 12px;
+  color: white !important;
 }
 
-/* Focused state */
-.filters select:focus {
-  outline: none;
-  border-color: #ffdd57;
-  box-shadow: 0 0 8px #ffdd57;
+.choices__placeholder {
+  color: #ccc !important;
 }
 
-/* Optional: Add a custom arrow */
-.filters select {
-  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 12px;
-  padding-right: 32px; /* space for arrow */
+.choices__list--dropdown {
+  background-color: #0b1e3f !important;
+  border-radius: 8px;
+}
+
+.choices__list--dropdown .choices__item {
+  padding: 10px;
+  white-space: normal;
+}
+
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+  background-color: #ffdd57 !important;
+  color: #000 !important;
 }
 
 /* ===== ACTIVITY GRID ===== */
