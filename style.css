@@ -182,11 +182,26 @@ body {
 
 .search-bar {
   width: 90%;
-  padding: 12px;
+  padding: 12px 16px;
   margin: 1em 0;
-  border: none;
-  border-radius: 6px;
+  background-color: #0b1e3f; /* dark navy to match dropdown */
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 8px;
   font-size: 1em;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* Placeholder text */
+.search-bar::placeholder {
+  color: #ccc;
+}
+
+/* Glow effect on focus */
+.search-bar:focus {
+  border-color: #ffdd57;
+  box-shadow: 0 0 5px #ffdd57;
 }
 
 /* ===== FILTER BAR ===== */
