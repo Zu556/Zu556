@@ -205,53 +205,49 @@ body {
 }
 
 /* ===== FILTER BAR ===== */
-/* Make placeholder match dropdown box */
-.choices__inner .choices__placeholder {
-  color: #fff !important; /* White text */
-  background-color: #0b1e3f !important; /* Match dropdown bg */
-  opacity: 1 !important;
-}
-
-/* Dropdown container styling */
-.choices__inner {
-  background-color: #0b1e3f !important;
-  color: white !important;
-  border-radius: 8px;
-  border: 1px solid #444;
-}
-
-/* Dropdown menu styling */
-.choices__list--dropdown {
-  background-color: #0b1e3f !important;
-  border: 1px solid #444;
-  border-radius: 8px;
-}
-
-/* Allow multi-line for long options */
-.choices__list--dropdown .choices__item {
-  white-space: normal !important; /* Wrap text */
-  line-height: 1.4em; /* Better readability */
-  padding: 8px 12px;
-}
-
-/* Move "Press to select" under the option text */
-.choices__list--dropdown .choices__item[data-select-text]::after {
-  content: attr(data-select-text);
-  display: block;
-  font-size: 0.8em;
-  color: #aaa;
-  margin-top: 4px;
-}
-
-/* Hover highlight */
-.choices__list--dropdown .choices__item--selectable.is-highlighted {
-  background-color: #162a60 !important;
-  color: #ffdd57 !important;
-}
-
-/* Space between filter elements */
 .filters {
-  gap: 1.5em; /* More breathing room */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  justify-content: center;
+  margin: 2em 0;
+}
+
+/* Dropdowns styled like modern filter pills */
+.filters select {
+  appearance: none; /* remove default arrow */
+  background-color: #0b1e3f;
+  color: #ffffff;
+  padding: 12px 18px;
+  border: 1px solid #2a3f75;
+  border-radius: 10px;
+  font-size: 0.95em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Hover effect */
+.filters select:hover {
+  border-color: #ffdd57;
+  box-shadow: 0 3px 10px rgba(255, 221, 87, 0.2);
+}
+
+/* Focused state */
+.filters select:focus {
+  outline: none;
+  border-color: #ffdd57;
+  box-shadow: 0 0 8px #ffdd57;
+}
+
+/* Optional: Add a custom arrow */
+.filters select {
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+  padding-right: 32px; /* space for arrow */
 }
 
 /* ===== ACTIVITY GRID ===== */
