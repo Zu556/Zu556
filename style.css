@@ -333,3 +333,64 @@ body {
   background-color: #ffdd57 !important;
   color: #000 !important;
 }
+
+/* === FILTER BAR IMPROVEMENTS === */
+
+/* Space out the filter group */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2em; /* more breathing room between elements */
+  margin-bottom: 1.5em;
+}
+
+/* Make dropdowns wider */
+.choices {
+  min-width: 200px;
+  font-size: 1em;
+}
+
+/* Inner box styling */
+.choices__inner {
+  background-color: #0b1e3f !important;
+  border: 1px solid #1a2a55;
+  border-radius: 8px !important;
+  padding: 10px 14px !important; /* more vertical space */
+  min-height: 45px; /* keep consistent height */
+}
+
+/* Placeholder color same as background */
+.choices__placeholder {
+  color: #0b1e3f !important; /* blends with background */
+}
+
+/* Selected text remains visible */
+.choices__list--single .choices__item {
+  color: white !important;
+}
+
+/* Dropdown styling */
+.choices__list--dropdown {
+  background-color: #0b1e3f !important;
+  border-radius: 8px;
+  padding: 6px 0;
+}
+
+/* Dropdown items with better spacing */
+.choices__list--dropdown .choices__item {
+  padding: 12px 14px;
+  white-space: normal;
+  font-size: 0.95em;
+}
+
+/* Hover effect */
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+  background-color: #ffdd57 !important;
+  color: #000 !important;
+}
+
+/* Remove "Press to select" from dropdown */
+.choices__list--dropdown .choices__item[data-choice-placeholder] {
+  display: none !important;
+}
